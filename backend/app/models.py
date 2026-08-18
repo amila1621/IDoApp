@@ -9,13 +9,33 @@ class Priority(str, Enum):
     high = "high"
 
 
+class Category(str, Enum):
+    health_fitness = "health_fitness"
+    finance = "finance"
+    errands_shopping = "errands_shopping"
+    work_career = "work_career"
+    personal_selfcare = "personal_selfcare"
+    family_relationships = "family_relationships"
+    home_maintenance = "home_maintenance"
+    household_chores = "household_chores"
+    learning_growth = "learning_growth"
+
+
 class Task(SQLModel, table=True):
     id: int | None = Field(default=None, primary_key=True)
     title : str
     done: bool = Field(default=False)
+
+    #LLM fields 
+    category: Category = Field(default=Category.personal_selfcare)
     due_at: datetime | None = Field(default=None)
-    priority: Priority = Field(default=Priority.medium)
     is_outdoor: bool = Field(default=False)
+    duration_minutes: int | None = Field(default=None)
+    best_time: str | None = Field(default=None)
+   
+    
+
+    priority: Priority = Field(default=Priority.medium)
     created_at: datetime = Field(default_factory=lambda: datetime.now(timezone.utc))
 
 
