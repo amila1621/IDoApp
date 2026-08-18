@@ -1,6 +1,7 @@
 
 from contextlib import asynccontextmanager
 from fastapi import FastAPI
+from fastapi.middleware.cors import CORSMiddleware
 from app.db import create_db_and_tables
 from app.routers import tasks
 
@@ -12,6 +13,15 @@ async def lifespan(app: FastAPI):
     yield
 
 app = FastAPI(title="Todo APP Api" , lifespan=lifespan)
+
+
+app.add_middleware(
+    CORSMiddleware,
+    allow_origins=["http://localhost:5173"],
+    allow_methods=["*"],
+    allow_headers=["*"],
+)
+
 app.include_router(tasks.router)
 
 @app.get("/health")
