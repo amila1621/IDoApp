@@ -1,9 +1,10 @@
 import { useState, useEffect } from 'react';
-import { fetchTasks } from './api';
+import { fetchTasks, createTask, updateTask, deleteTask } from './api';
 
 function App() {
   const [tasks, setTasks] = useState([]);
   const [error, setError] = useState(null);
+  const [newTitle, setNewTitle] = useState('');
 
   useEffect(() => {
     fetchTasks()
@@ -11,14 +12,75 @@ function App() {
       .catch(() => setError("Failed to fetch tasks"));
   }, []);
 
+
+async function handleAdd(){
+  const title = newTitle.trim();
+  if (!title) return;
+
+  try {
+    const created = await createTask({ title });
+    setTasks([...tasks, created]);
+    setNewTitle('');
+  } catch {
+    setError("Failed to add task");
+  }
+}
+
+
+async function handleToggle(task){
+  try{
+    const updated = await updateTask(task.id, { done: !task.done });
+    setTasks(tasks.map(t => t.id === task.id ? updated : t));
+
+  } catch {
+    setError("Failed to update task");
+  }
+}
+
+async function handleDelete(task){
+  try{
+    await deleteTask(task.id);
+    setTasks(tasks.filter(t => t.id !== task.id));
+  } catch {
+    setError("Failed to delete task");
+  }
+}
+
+
   return (
     <div>
-      <h1>I D Todo app</h1>
+      <h1>I Do Todo app</h1>
       {error && <p className="error">{error}</p>}
-      <ul className="task-list">
+
+    <div className="task-input">
+      <input
+        type="text"
+        placeholder="Add a new task"
+        value={newTitle}
+        onChange={(e) => setNewTitle(e.target.value)}
+        onKeyDown={(e) => e.key === 'Enter' && handleAdd()}
+      />
+      <button onClick={handleAdd}>Add Task</button>
+    </div>
+     
+      <h2>Tasks</h2>
+       <ul className="task-list">
         {tasks.map(task => (
-          <li key={task.id}>{task.title}</li>
-        ))}
+         <li
+            key={task.id}
+            className="tasks" >
+            <input
+              type="checkbox"
+              checked={task.done}
+              onChange={() => handleToggle(task)}
+            />
+            <span className={task.done ? "done" : ""}>{task.title}</span>
+            <button onClick={() => handleDelete(task)}>Delete</button>
+
+
+          </li>
+        ))} 
+      
       </ul>
       {tasks.length === 0 && !error && <p className="warning">No tasks available.</p>}
     </div>

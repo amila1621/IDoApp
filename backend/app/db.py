@@ -6,7 +6,7 @@ from sqlmodel import SQLModel, Session, create_engine
 
 
 
-# Import models 
+# Import models )
 from app import models
 
 load_dotenv()
