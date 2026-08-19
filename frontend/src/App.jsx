@@ -80,6 +80,7 @@ async function handleDelete(task){
                 {task.category?.replace("_", " ")}
                 {task.due_at && ` · ${new Date(task.due_at).toLocaleDateString()}`}
                 {task.is_outdoor && " · outdoor"}
+                {task.weather && ` · ${task.weather}`}
               </small>
             </span>
             <button onClick={() => handleDelete(task)}>Delete</button>

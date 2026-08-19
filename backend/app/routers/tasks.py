@@ -7,6 +7,7 @@ from app.db import get_session
 from app.models import Task
 from app.schemas import TaskCreate, TaskUpdate
 from app.llm.enrich import enrich_task
+from app.weather import fetch_forecast, needs_weather, weather_message
 
 router = APIRouter(prefix="/tasks", tags=["tasks"])
 
@@ -18,10 +19,6 @@ def create_task(payload: TaskCreate, session: Session = Depends(get_session)):
     session.refresh(task)
     return task
 
-
-@router.get("", response_model=list[Task])
-def list_tasks(session: Session = Depends(get_session)):
-    return session.exec(select(Task)).all()
     
 
 
@@ -70,10 +67,28 @@ def enrich(payload: dict, session: Session = Depends(get_session)):
         due_at=enriched["due_at"],
         duration_minutes=enriched["duration_minutes"],
         best_time=enriched["best_time"],
-        source=enriched["source"]
+        
     )
     session.add(task)
     session.commit()
     session.refresh(task)
     return { "task": task, "source": enriched["source"] }
-    
+
+
+
+@router.get("")
+def list_tasks(session: Session = Depends(get_session)):
+    tasks = session.exec(select(Task)).all()
+
+    forecast = fetch_forecast()
+
+    result = []
+    for task in tasks:
+        item = task.model_dump()
+        item["weather"] = None
+        if forecast and needs_weather(task):
+            day = task.due_at.date()
+            if day in forecast:
+                item["weather"] = weather_message(forecast[day])
+        result.append(item)
+    return result
