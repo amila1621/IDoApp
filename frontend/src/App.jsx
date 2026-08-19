@@ -20,6 +20,7 @@ function App() {
   const [tasks, setTasks] = useState([]);
   const [error, setError] = useState(null);
   const [newTitle, setNewTitle] = useState("");
+  const [showVoicePopup, setShowVoicePopup] = useState(false);
 
   useEffect(() => {
     fetchTasks()
@@ -152,9 +153,31 @@ function App() {
             onKeyDown={(e) => e.key === "Enter" && handleAdd()}
           />
           <button onClick={handleAdd}>Add</button>
+          <button className="mic-btn" onClick={() => setShowVoicePopup(true)}>
+            <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
+              <path d="M12 1a3 3 0 0 0-3 3v8a3 3 0 0 0 6 0V4a3 3 0 0 0-3-3z"></path>
+              <path d="M19 10v2a7 7 0 0 1-14 0v-2"></path>
+              <line x1="12" y1="19" x2="12" y2="23"></line>
+              <line x1="8" y1="23" x2="16" y2="23"></line>
+            </svg>
+          </button>
+         
         </div>
         
       </div>
+
+      {showVoicePopup && (
+        <div className="voice-popup-overlay" onClick={() => setShowVoicePopup(false)}>
+          <div className="voice-popup" onClick={(e) => e.stopPropagation()}>
+            <button className="popup-close" onClick={() => setShowVoicePopup(false)}>✕</button>
+            <div className="popup-content">
+              <div className="popup-emoji">😊</div>
+              <h2>Hah!! Gotch You</h2>
+              <p>This is not working yet.I did not have time to add it to it even with Claude help.</p>
+            </div>
+          </div>
+        </div>
+      )}
     </div>
   );
 }
