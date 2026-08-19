@@ -1,10 +1,17 @@
 
 
 from datetime import date, datetime
+from dotenv import load_dotenv
+
+
 
 import httpx
+import os
 
 from app.llm.resolve import TZ
+
+
+load_dotenv()
 
 # MY current Location
 LAT = 66.5039
@@ -12,7 +19,7 @@ LON = 25.7294
 
 
 
-_OPEN_METEO = "https://api.open-meteo.com/v1/forecast"
+_OPEN_METEO =os.getenv("OPEN_METEO_API_URL")
 
 # Open-Meteo WMO weather codes → short human labels (subset we care about).
 _CODE_LABELS = {
