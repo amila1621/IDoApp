@@ -25,7 +25,7 @@ EXAMPLES = [
     },
     {
         "role": "assistant",
-        "content": '{"title": "Buy groceries", "category": shopping", "is_outdoor": true, "when_expression": "tomorrow morning", "duration_minutes": 120, "best_time": "evening"}'
+        "content": '{"title": "Buy groceries", "category": "shopping", "is_outdoor": true, "when_expression": "tomorrow morning", "duration_minutes": 120, "best_time": "evening"}'
     },
     {
         "role": "user",

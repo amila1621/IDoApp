@@ -1,15 +1,10 @@
 
 
 import os
-from dotenv import load_dotenv
 from sqlmodel import SQLModel, Session, create_engine
 
-
-
-# Import models )
+# Import models so SQLModel registers them
 from app import models
-
-load_dotenv()
 
 DATABASE_URL = "sqlite:///./todo.db"
 

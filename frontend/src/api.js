@@ -10,19 +10,6 @@ export async function fetchTasks(){
 }
 
 
-export async function createTask(task){
-    const res = await fetch(`${BASE_URL}/tasks`, {
-        method: "POST",
-        headers: {
-            "Content-Type": "application/json"
-        },
-        body: JSON.stringify(task)
-    });
-    if (!res.ok) throw new Error("Failed to create task");
-    return await res.json();
-}
-
-
 
 export async function updateTask(id, task){
     const res = await fetch(`${BASE_URL}/tasks/${id}`, {
@@ -42,7 +29,6 @@ export async function deleteTask(id){
         method: "DELETE"
     });
     if (!res.ok) throw new Error("Failed to delete task");
-    return await res.json();
 }
 
 

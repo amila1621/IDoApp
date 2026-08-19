@@ -1,17 +1,11 @@
 
 
 from datetime import date, datetime
-from dotenv import load_dotenv
-
-
 
 import httpx
 import os
 
 from app.llm.resolve import TZ
-
-
-load_dotenv()
 
 # MY current Location
 LAT = 65.0124

@@ -10,10 +10,14 @@ class TaskCreate(SQLModel):
     category: Category = Category.personal_selfcare
     is_outdoor: bool = False
     duration_minutes: int | None = None
-    brest_time: str | None = None
+    best_time: str | None = None
     priority: Priority = Priority.medium
 
 
+
+
+class EnrichRequest(SQLModel):
+    text: str
 
 
 class TaskUpdate(SQLModel):

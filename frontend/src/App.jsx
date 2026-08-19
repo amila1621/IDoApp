@@ -7,7 +7,7 @@ import "./App.css";
 const FOLDERS = [
   ["health_fitness", "Health & Fitness", "#3FA796"],
   ["finance", "Finance", "#2F6FB0"],
-  ["errands_shopping", "Errands & Shopping", "#E0A458"],
+  ["shopping", "Errands & Shopping", "#E0A458"], 
   ["work_career", "Work & Career", "#5B6EE1"],
   ["personal_selfcare", "Personal & Self-Care", "#4FB0C6"],
   ["family_relationships", "Family & Relationships", "#B26FB0"],
@@ -43,8 +43,8 @@ function App() {
 
   async function handleToggle(task) {
     try {
-      const updated = await updateTask(task.id, { done: !task.done });
-      setTasks(tasks.map((t) => (t.id === task.id ? updated : t)));
+      await updateTask(task.id, { done: !task.done });
+      setTasks(await fetchTasks());
     } catch {
       setError("Couldn't update that task.");
     }
