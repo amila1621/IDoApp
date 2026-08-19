@@ -1,4 +1,5 @@
 .venv/
+tests/
 __pycache__/
 *.pyc
 *.db
@@ -7,3 +8,4 @@ __pycache__/
 
 node_modules
 dist/
+*.ini
