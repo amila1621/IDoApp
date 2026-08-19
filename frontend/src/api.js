@@ -45,3 +45,15 @@ export async function deleteTask(id){
     return await res.json();
 }
 
+
+export async function enrichTask(text){
+    const res = await fetch(`${BASE_URL}/tasks/enrich`, {
+        method: "POST",
+        headers: {
+            "Content-Type": "application/json"
+        },
+        body: JSON.stringify({ text })
+    });
+    if (!res.ok) throw new Error("Failed to enrich task");
+    return await res.json();
+}

@@ -1,5 +1,5 @@
 import { useState, useEffect } from 'react';
-import { fetchTasks, createTask, updateTask, deleteTask } from './api';
+import { fetchTasks, createTask, updateTask, deleteTask, enrichTask } from './api';
 
 function App() {
   const [tasks, setTasks] = useState([]);
@@ -14,12 +14,12 @@ function App() {
 
 
 async function handleAdd(){
-  const title = newTitle.trim();
-  if (!title) return;
+  const text = newTitle.trim();
+  if (!text) return;
 
   try {
-    const created = await createTask({ title });
-    setTasks([...tasks, created]);
+    const result = await enrichTask(text);
+    setTasks([...tasks, result.task]);
     setNewTitle('');
   } catch {
     setError("Failed to add task");
@@ -74,7 +74,14 @@ async function handleDelete(task){
               checked={task.done}
               onChange={() => handleToggle(task)}
             />
-            <span className={task.done ? "done" : ""}>{task.title}</span>
+            <span className={task.done ? "done" : ""} style={{ flex: 1 }}>
+              {task.title}
+              <small style={{ color: "#888", marginLeft: "0.5rem" }}>
+                {task.category?.replace("_", " ")}
+                {task.due_at && ` · ${new Date(task.due_at).toLocaleDateString()}`}
+                {task.is_outdoor && " · outdoor"}
+              </small>
+            </span>
             <button onClick={() => handleDelete(task)}>Delete</button>
 
 

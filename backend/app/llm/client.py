@@ -34,9 +34,7 @@ def complete(text: str) -> str:
                 {"role": "user", "content": text}
             ]
         )
-        raw = response.content[0].text
-        print("CLAUDE RAW", raw)
-        return raw
+        return response.content[0].text
     except Exception as e:
         raise LLMError(str(e)) from e
 
