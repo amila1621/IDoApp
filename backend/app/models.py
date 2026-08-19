@@ -12,7 +12,7 @@ class Priority(str, Enum):
 class Category(str, Enum):
     health_fitness = "health_fitness"
     finance = "finance"
-    errands_shopping = "errands_shopping"
+    shopping = "shopping"
     work_career = "work_career"
     personal_selfcare = "personal_selfcare"
     family_relationships = "family_relationships"
