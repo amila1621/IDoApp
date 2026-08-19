@@ -6,6 +6,7 @@ from sqlmodel import select, Session
 from app.db import get_session
 from app.models import Task
 from app.schemas import TaskCreate, TaskUpdate
+from app.llm.enrich import enrich_task
 
 router = APIRouter(prefix="/tasks", tags=["tasks"])
 
@@ -55,5 +56,24 @@ def delete_task(task_id: int, session: Session = Depends(get_session)):
     return None
 
 
+@router.post("/enrich")
+def enrich(payload: dict, session: Session = Depends(get_session)):
+    text = (payload.get("text") or "").strip()
+    if not text:
+        raise HTTPException(status_code=422, detail="Missing 'text' in request body")
+    enriched = enrich_task(text)
 
-   
+    task = Task(
+        title=enriched["title"],
+        category=enriched["category"],
+        is_outdoor=enriched["is_outdoor"],
+        due_at=enriched["due_at"],
+        duration_minutes=enriched["duration_minutes"],
+        best_time=enriched["best_time"],
+        source=enriched["source"]
+    )
+    session.add(task)
+    session.commit()
+    session.refresh(task)
+    return { "task": task, "source": enriched["source"] }
+    

@@ -4,10 +4,13 @@ import json
 import os
 
 from anthropic import Anthropic
+from dotenv import load_dotenv
+
+load_dotenv()
 
 from app.llm.prompt import SYSTEM_PROMPT, EXAMPLES
 
-MODEL = os.getenv("ANTHROPIC_MODEL", "claude-v1")
+MODEL = os.getenv("ANTHROPIC_MODEL", "claude-haiku-4-5")
 
 class LLMError(Exception):
     """ Raised when the LLM call fails for any reason. """
@@ -25,13 +28,15 @@ def complete(text: str) -> str:
             model=MODEL,
             max_tokens=300,
             temperature=0.2,
-            system_prompt=SYSTEM_PROMPT,
+            system=SYSTEM_PROMPT,
             messages= [
                 *EXAMPLES,
                 {"role": "user", "content": text}
             ]
         )
-        return response.content[0].text
+        raw = response.content[0].text
+        print("CLAUDE RAW", raw)
+        return raw
     except Exception as e:
         raise LLMError(str(e)) from e
 
