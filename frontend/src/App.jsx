@@ -61,9 +61,12 @@ function App() {
   return (
     <div className="app">
       <header className="header">
-        <p className="eyebrow">Rovaniemi · today</p>
-        <h1>Smart Todo</h1>
-        <p>Type a task in plain words — it gets sorted and weather-checked.</p>
+       
+        <p className="eyebrow">Oulu · today</p> 
+        <div className="title">
+          <h1>I DO </h1>
+          <p>Your Smart To DO app.</p>
+        </div>
         {error && <p className="error">{error}</p>}
       </header>
 
@@ -139,20 +142,18 @@ function App() {
         );
       })}
 
-      <div className="composer">
-        <div className="composer-inner">
+      <div className="addtask_btn">
+        <div className="addtask_btn-inner">
           <input
             type="text"
-            placeholder="e.g. go for a run tomorrow morning"
+            placeholder="What you need to do..."
             value={newTitle}
             onChange={(e) => setNewTitle(e.target.value)}
             onKeyDown={(e) => e.key === "Enter" && handleAdd()}
           />
           <button onClick={handleAdd}>Add</button>
         </div>
-        <p className="hint">
-          Sorted into folders automatically · weather for outdoor plans
-        </p>
+        
       </div>
     </div>
   );

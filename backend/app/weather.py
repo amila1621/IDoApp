@@ -14,8 +14,8 @@ from app.llm.resolve import TZ
 load_dotenv()
 
 # MY current Location
-LAT = 66.5039
-LON = 25.7294
+LAT = 65.0124
+LON = 25.4682
 
 
 
