@@ -58,6 +58,7 @@ function App() {
       setError("Couldn't delete that task.");
     }
   }
+  
 
   return (
     <div className="app">
