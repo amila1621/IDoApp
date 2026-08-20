@@ -9,6 +9,11 @@ Return only a JSON object with the following fields:
 - when_expression: the DATE part only, copied from the note (e.g. "tomorrow", "next Monday", "next Monday at 3pm"). Put vague times of day like "morning" or "evening" in best_time, NOT here. A specific clock time like "3pm" may stay. Null if no date. 
 - duration_minutes: A rough estimation in minutes of the duration of the task. This field can be null if the duration is not specified.
 - best_time: A natural language expression of the best time of day to do the task. For example, "morning", "afternoon", "evening", "night". This field can be null if the best time is not specified.
+- steps: a list of 3-6 concrete sub-steps, but ONLY if this task is a
+    genuine multi-step project (e.g. "plan a birthday party", "organize a
+    move", "prepare for a trip"). For simple, single-action tasks (e.g.
+    "buy milk", "call the dentist", "go for a run"), return an empty list [].
+    Each step should be a short, actionable phrase.
 
 Rules:
 - Pick single category from the fixed set of folders. If the task could fit into multiple categories, choose the most relevant one.
@@ -25,7 +30,7 @@ EXAMPLES = [
     },
     {
         "role": "assistant",
-        "content": '{"title": "Buy groceries", "category": "shopping", "is_outdoor": true, "when_expression": "tomorrow morning", "duration_minutes": 120, "best_time": "evening"}'
+        "content": '{"title": "Buy groceries", "category": "shopping", "is_outdoor": true, "when_expression": "tomorrow", "duration_minutes": 120, "best_time": "morning", "steps": []}'
     },
     {
         "role": "user",
@@ -33,7 +38,7 @@ EXAMPLES = [
     },
     {
         "role": "assistant",
-        "content": '{"title": "Go for a run", "category": "health_fitness", "is_outdoor": true, "when_expression": "next week", "duration_minutes": 60, "best_time": "morning"}'
+        "content": '{"title": "Go for a run", "category": "health_fitness", "is_outdoor": true, "when_expression": "next week", "duration_minutes": 60, "best_time": "morning", "steps": []}'
     },
     {
         "role": "user",
@@ -41,6 +46,14 @@ EXAMPLES = [
     },
     {
         "role": "assistant",
-        "content": '{"title": "Pay electricity bill", "category": "finance", "is_outdoor": false, "when_expression": "on Friday at 5pm", "duration_minutes": 15, "best_time": null}'
+        "content": '{"title": "Pay electricity bill", "category": "finance", "is_outdoor": false, "when_expression": "Friday at 5pm", "duration_minutes": 15, "best_time": null, "steps": []}'
+    },
+    {
+        "role": "user",
+        "content": "Plan my mom's birthday party"
+    },
+    {
+        "role": "assistant",
+        "content": '{"title": "Plan mom\'s birthday party", "category": "family_relationships", "is_outdoor": false, "when_expression": null, "duration_minutes": null, "best_time": null, "steps": ["Pick a date and venue", "Order the cake", "Send invitations", "Buy a gift", "Plan food and drinks"]}'
     }
 ]

@@ -132,6 +132,14 @@ function App() {
                         {task.weather}
                       </div>
                     )}
+
+                    {task.steps && task.steps.length > 0 && (
+  <ul className="steps">
+    {task.steps.map((step, i) => (
+      <li key={i}>{step}</li>
+    ))}
+  </ul>
+)}
                   </div>
                   <button className="del" onClick={() => handleDelete(task)}>
                     ✕

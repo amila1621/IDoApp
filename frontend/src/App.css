@@ -215,6 +215,55 @@ body {
   font-weight: 500;
 }
 
+.steps {
+  list-style: none;
+  margin: 10px 0 0;
+  padding: 0;
+  counter-reset: step;
+}
+.steps li {
+  position: relative;
+  counter-increment: step;
+  padding: 3px 0 3px 26px;
+  font-size: 0.86rem;
+  color: var(--muted);
+}
+.steps li::before {
+  content: counter(step);
+  position: absolute;
+  left: 0;
+  top: 3px;
+  width: 16px;
+  height: 16px;
+  border-radius: 50%;
+  background: var(--accent-soft);
+  color: var(--accent);
+  font-size: 0.62rem;
+  font-weight: 700;
+  line-height: 16px;
+  text-align: center;
+}
+.steps li::after {
+  content: "";
+  position: absolute;
+  left: 8px;
+  top: 21px;
+  width: 1px;
+  height: calc(100% - 18px);
+  background: var(--line);
+}
+.steps li:last-child::after {
+  display: none;
+}
+.card.completed .steps li {
+  text-decoration: line-through;
+  color: var(--done);
+}
+.card.completed .steps li::before {
+  background: var(--bg);
+  color: var(--done);
+}
+
 .del {
   appearance: none;
   background: none;

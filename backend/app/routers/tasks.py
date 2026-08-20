@@ -67,6 +67,7 @@ def enrich(payload: dict, session: Session = Depends(get_session)):
         due_at=enriched["due_at"],
         duration_minutes=enriched["duration_minutes"],
         best_time=enriched["best_time"],
+        steps=enriched["steps"]
         
     )
     session.add(task)
