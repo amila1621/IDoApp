@@ -5,7 +5,7 @@ from sqlmodel import select, Session
 
 from app.db import get_session
 from app.models import Task
-from app.schemas import TaskCreate, TaskUpdate
+from app.schemas import TaskCreate, TaskUpdate, EnrichRequest
 from app.llm.enrich import enrich_task
 from app.weather import fetch_forecast, needs_weather, weather_message
 
@@ -54,8 +54,8 @@ def delete_task(task_id: int, session: Session = Depends(get_session)):
 
 
 @router.post("/enrich")
-def enrich(payload: dict, session: Session = Depends(get_session)):
-    text = (payload.get("text") or "").strip()
+def enrich(payload: EnrichRequest, session: Session = Depends(get_session)):
+    text = payload.text.strip()
     if not text:
         raise HTTPException(status_code=422, detail="Missing 'text' in request body")
     enriched = enrich_task(text)
