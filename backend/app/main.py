@@ -15,7 +15,7 @@ async def lifespan(app: FastAPI):
     create_db_and_tables()
     yield
 
-app = FastAPI(title="Todo APP Api" , lifespan=lifespan)
+app = FastAPI(title="IDo APP Api" , lifespan=lifespan)
 
 
 app.add_middleware(
@@ -27,6 +27,6 @@ app.add_middleware(
 
 app.include_router(tasks.router)
 
-@app.get("/health")
-def health():
-    return{ "status": "OK"}
+# @app.get("/health")
+# def health():
+#     return{ "status": "OK"}

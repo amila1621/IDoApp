@@ -2,9 +2,9 @@
 
 import json
 import os
-
 from anthropic import Anthropic
 from app.llm.prompt import SYSTEM_PROMPT, EXAMPLES
+
 
 MODEL = os.getenv("ANTHROPIC_MODEL", "claude-haiku-4-5")
 

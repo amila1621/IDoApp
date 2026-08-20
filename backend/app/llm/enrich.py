@@ -29,6 +29,7 @@ def enrich_task(text: str, now: datetime | None = None) -> dict:
     "is_outdoor": data.is_outdoor,
     "due_at": resolve_when(data.when_expression, now),
     "duration_minutes": data.duration_minutes,
+    "priority": data.priority,
     "best_time": data.best_time,
     "steps": data.steps,
     "source": "llm"
@@ -43,6 +44,7 @@ def _fallback(text: str, now: datetime | None = None) -> dict:
         "category": Category.personal_selfcare,
         "is_outdoor": False,
         "due_at": resolve_when(None, now),
+        "priority": "medium",
         "duration_minutes": None,
         "best_time": None,
         "steps": [],

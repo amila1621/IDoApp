@@ -66,6 +66,7 @@ def enrich(payload: dict, session: Session = Depends(get_session)):
         is_outdoor=enriched["is_outdoor"],
         due_at=enriched["due_at"],
         duration_minutes=enriched["duration_minutes"],
+        priority=enriched["priority"],
         best_time=enriched["best_time"],
         steps=enriched["steps"]
         
