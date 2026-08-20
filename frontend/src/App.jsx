@@ -7,7 +7,7 @@ import "./App.css";
 const FOLDERS = [
   ["health_fitness", "Health & Fitness", "#3FA796"],
   ["finance", "Finance", "#2F6FB0"],
-  ["shopping", "Errands & Shopping", "#E0A458"], 
+  ["shopping", "Errands & Shopping", "#E0A458"],
   ["work_career", "Work & Career", "#5B6EE1"],
   ["personal_selfcare", "Personal & Self-Care", "#4FB0C6"],
   ["family_relationships", "Family & Relationships", "#B26FB0"],
@@ -62,8 +62,7 @@ function App() {
   return (
     <div className="app">
       <header className="header">
-       
-        <p className="eyebrow">Oulu · today</p> 
+        <p className="eyebrow">Oulu · today</p>
         <div className="title">
           <h1>I DO </h1>
           <p>Your Smart To DO app.</p>
@@ -105,6 +104,11 @@ function App() {
                     onChange={() => handleToggle(task)}
                   />
                   <div className="body">
+                    {task.priority && (
+                      <span className={"priority priority-" + task.priority}>
+                        {task.priority}
+                      </span>
+                    )}
                     <p className="title">{task.title}</p>
                     <div className="meta">
                       {task.due_at && (
@@ -134,12 +138,12 @@ function App() {
                     )}
 
                     {task.steps && task.steps.length > 0 && (
-  <ul className="steps">
-    {task.steps.map((step, i) => (
-      <li key={i}>{step}</li>
-    ))}
-  </ul>
-)}
+                      <ul className="steps">
+                        {task.steps.map((step, i) => (
+                          <li key={i}>{step}</li>
+                        ))}
+                      </ul>
+                    )}
                   </div>
                   <button className="del" onClick={() => handleDelete(task)}>
                     ✕
@@ -162,26 +166,44 @@ function App() {
           />
           <button onClick={handleAdd}>Add</button>
           <button className="mic-btn" onClick={() => setShowVoicePopup(true)}>
-            <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
+            <svg
+              width="20"
+              height="20"
+              viewBox="0 0 24 24"
+              fill="none"
+              stroke="currentColor"
+              strokeWidth="2"
+              strokeLinecap="round"
+              strokeLinejoin="round"
+            >
               <path d="M12 1a3 3 0 0 0-3 3v8a3 3 0 0 0 6 0V4a3 3 0 0 0-3-3z"></path>
               <path d="M19 10v2a7 7 0 0 1-14 0v-2"></path>
               <line x1="12" y1="19" x2="12" y2="23"></line>
               <line x1="8" y1="23" x2="16" y2="23"></line>
             </svg>
           </button>
-         
         </div>
-        
       </div>
 
       {showVoicePopup && (
-        <div className="voice-popup-overlay" onClick={() => setShowVoicePopup(false)}>
+        <div
+          className="voice-popup-overlay"
+          onClick={() => setShowVoicePopup(false)}
+        >
           <div className="voice-popup" onClick={(e) => e.stopPropagation()}>
-            <button className="popup-close" onClick={() => setShowVoicePopup(false)}>✕</button>
+            <button
+              className="popup-close"
+              onClick={() => setShowVoicePopup(false)}
+            >
+              ✕
+            </button>
             <div className="popup-content">
               <div className="popup-emoji">😊</div>
               <h2>Hah!! Gotch You</h2>
-              <p>This is not working yet.I did not have time to add it to it even with Claude help.</p>
+              <p>
+                This is not working yet.I did not have time to add it to it even
+                with Claude help.
+              </p>
             </div>
           </div>
         </div>

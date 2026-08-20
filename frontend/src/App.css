@@ -199,6 +199,21 @@ body {
   border-color: transparent;
 }
 
+.priority {
+  display: block;
+  font-size: 0.60rem;
+  font-weight: 400;
+  text-transform: uppercase;
+  letter-spacing: 0.06em;
+  margin-bottom: 2px;
+}
+.priority-high {
+  color: var(--warn);
+}
+.priority-low {
+  color: var(--done);
+}
+
 .weather {
   display: flex;
   align-items: center;
@@ -317,7 +332,7 @@ body {
   border: none;
   border-radius: 11px;
   background: var(--accent);
-  color: #fff;
+  color: var(--surface);
   font-weight: 600;
   font-size: 0.95rem;
   cursor: pointer;
@@ -342,7 +357,7 @@ body {
 }
 .mic-btn:hover {
   background: var(--accent) !important;
-  color: #fff !important;
+  color: var(--surface) !important;
 }
 
 .hint {
@@ -358,7 +373,7 @@ body {
   left: 0;
   right: 0;
   bottom: 0;
-  background: rgba(0, 0, 0, 0.4);
+  background: var(--bg);
   display: flex;
   align-items: center;
   justify-content: center;
